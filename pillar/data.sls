@@ -1,0 +1,2 @@
+info: salt managed cluster
+
