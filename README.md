@@ -1,5 +1,10 @@
+
 # handson-salt
 SaltStack Hands On
+
+2 branche de ce repo : 
+* States contient les sls
+* Pillar contient la configuration
 
 # Setup SaltMaster
 
