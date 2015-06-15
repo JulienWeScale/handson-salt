@@ -1,5 +1,5 @@
 base:
-  'haproxy*':
+  'minion-*':
      - redis.server
      - java8
      - tomcat
