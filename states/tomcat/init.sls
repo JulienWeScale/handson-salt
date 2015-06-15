@@ -10,8 +10,8 @@ tomcat-user:
 tomcat-server:
   archive.extracted:
     - name: /home/tomcat
-    - source: http://wwwftp.ciril.fr/pub/apache/tomcat/tomcat-8/v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz
-    - source_hash: http://wwwftp.ciril.fr/pub/apache/tomcat/tomcat-8/v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz.md5
+    - source: http://archive.apache.org/dist/tomcat/tomcat-8/v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz
+    - source_hash: http://archive.apache.org/dist/tomcat/tomcat-8//v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz.md5
     - archive_format: tar
     - archive_user: tomcat
     - if_missing: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}
