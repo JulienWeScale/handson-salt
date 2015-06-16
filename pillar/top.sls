@@ -1,8 +1,8 @@
 base:
   '*':
-   - data
-   - haproxy
+     - data
+     - haproxy
   'minion-*':
-   - redis
-   - tomcat
+     - redis
+     - tomcat
 
