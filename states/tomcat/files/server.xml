@@ -1,5 +1,4 @@
-{% from "tomcat/map.jinja" import tomcat_settings with context %}
-<?xml version='1.0' encoding='utf-8'?>
+{% from "tomcat/map.jinja" import tomcat_settings with context %}<?xml version='1.0' encoding='utf-8'?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
