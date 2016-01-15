@@ -43,8 +43,9 @@ pillar_roots:
     - /srv/salt/pillars
 EOF
 
-# Configure syndication
-cat <<EOF > /etc/salt/master.d/syndic.conf
+if [ ${MASTER} != 'localhost' ]; then
+    # Configure syndication
+    cat <<EOF > /etc/salt/master.d/syndic.conf
 ########################################################################################################################
 ##  Syndic configuration
 
@@ -60,6 +61,8 @@ syndic_master_port:  4506
 # LOG file of the syndic daemon:
 syndic_log_file: syndic.log
 EOF
+    systemctl start salt-syndic
+fi
 
 # Clone and checkout states
 yum -y install git
@@ -68,7 +71,6 @@ git clone https://github.com/WeScale/handson-salt.git /srv/salt
 
 # Start services
 systemctl start salt-master
-systemctl start salt-syndic
 systemctl start salt-minion
 
 # Prepare motd
