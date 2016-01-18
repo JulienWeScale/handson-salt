@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+set -ev
+
 # First update system
 yum -y update
 
 # Get and install salt
 curl -L https://bootstrap.saltstack.com -o install_salt.sh
 # Install salt master/minion/syndic from latest stable
-sh install_salt.sh -F -S -Z -P -M -X -i 'central-master' stable
+sh install_salt.sh -F -S -Z -P -M -X stable
 
 # Retrieve and set Grains
 GRAINS=$(curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/instance/attributes/grains)
@@ -62,6 +64,9 @@ syndic_master_port:  4506
 syndic_log_file: syndic.log
 EOF
     systemctl start salt-syndic
+else
+    sysctl -w net.ipv4.ip_forward=1
+    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 fi
 
 # Clone and checkout states

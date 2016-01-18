@@ -22,7 +22,21 @@ Dans les deux cas il faudra fournir la passphrase.
 Cette infrastructure est créée via terraform. Les fichiers descriptifs sont :
 * common.tf - Déclaration du provider google compute engine et des ressources de base de l'infrastructure
               (réseau, firewall, master central)
-* xxxx.tf - Déclaration des machines par équipe
+* teams.tf - Déclaration des machines par équipe
+* params.tf - Déclaration des paramétres (nom d'image, nombre d'équipes, ...)
+
+## Infrastructure
+
+L'infrastructure du handson crée un réseau et des règles de firewall valables autorisant
+l'accés ssh et web depuis l'extérieure et autorisant tout trafique réseau en interne.
+Les machines :
+* central-master (serveur master salt pour tte l'infrastructure)
+* teamX-master (serveur master salt pour l'infrastructure de l'équipe X)
+* teamX-haproxy (serveur haproxy pour l'infrastructure de l'équipe X)
+* teamX-tomcat[1-2] (serveur tomcat pour l'infrastructure de l'équipe X)
+* teamX-redis (serveur redis pour l'infrastructure de l'équipe X)
+
+
 
 ## Utilisation
 
@@ -36,3 +50,11 @@ Puis lancez :
 $ terraform plan
 $ terraform apply
 ```
+
+Pour détruire l'infrastructure il faudra lancer :
+
+```shell
+$ terraform destroy
+```
+
+## Infrast

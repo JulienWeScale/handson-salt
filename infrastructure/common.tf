@@ -5,11 +5,6 @@ provider "google" {
   region      = "europe-west1"
 }
 
-variable "image" {
-    default = "centos-7-v20151104"
-}
-
-
 # Create a network for handson
 resource "google_compute_network" "default" {
     name = "salt"
@@ -39,7 +34,6 @@ resource "google_compute_firewall" "external" {
 resource "google_compute_firewall" "internal" {
     name = "internal"
     network = "${google_compute_network.default.name}"
-
     description = "Firewall rules to allow all traffic inside the project network"
 
     allow {
@@ -61,6 +55,7 @@ resource "google_compute_instance" "root" {
     machine_type = "g1-small"
     zone = "europe-west1-b"
     tags = ["master", "salt"]
+    can_ip_forward = true
 
     // Local SSD disk
     disk {
@@ -79,8 +74,7 @@ resource "google_compute_instance" "root" {
 roles:
   - master
 EOG
-        master= "localhost"
-
+        master = "localhost"
     }
 
     metadata_startup_script = "${file("master-bootstrap.sh")}"
@@ -92,3 +86,14 @@ EOG
     depends_on = ["google_compute_network.default"]
 }
 
+
+resource "google_compute_route" "nat" {
+    name = "nat-gateway"
+    dest_range = "0.0.0.0/0"
+    network = "salt"
+    next_hop_instance = "central-master"
+    next_hop_instance_zone = "europe-west1-b"
+    priority = 800
+    tags = ["nat"]
+    depends_on = ["google_compute_instance.root"]
+}
