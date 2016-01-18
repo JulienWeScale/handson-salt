@@ -42,7 +42,7 @@ file_roots:
     - /srv/salt/states
 pillar_roots:
   base:
-    - /srv/salt/pillars
+    - /srv/salt/pillar
 EOF
 
 if [ ${MASTER} != 'localhost' ]; then
@@ -80,5 +80,5 @@ systemctl start salt-minion
 
 # Prepare motd
 IP=$(curl -s -H "Metadata-Flavor:Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/ip)
-echo "WeScale - Welcome to q$HOSTNAME ($IP)" > /etc/motd
+echo "WeScale - Welcome to $HOSTNAME ($IP)" > /etc/motd
 

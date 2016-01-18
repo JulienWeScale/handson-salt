@@ -76,10 +76,10 @@ EOG
 # Tomcats of the team
 resource "google_compute_instance" "team-tomcat" {
     count = "${var.teams * 2}"
-    name = "team${(count.index % var.teams) + 1}-tomcat${count.index}"
+    name = "team${((count.index + 1) % var.teams) + 1}-tomcat${count.index}"
     machine_type = "g1-small"
     zone = "europe-west1-b"
-    tags = ["team${(count.index % var.teams) + 1}", "tomcat", "salt", "nat"]
+    tags = ["team${((count.index + 1) % var.teams) + 1}", "tomcat", "salt", "nat"]
 
     disk {
         image = "${var.image}"
@@ -97,7 +97,7 @@ resource "google_compute_instance" "team-tomcat" {
 roles:
   - tomcat
 EOG
-        master = "team${(count.index % var.teams)+1}-master"
+        master = "team${((count.index + 1) % var.teams) + 1}-master"
     }
 
     metadata_startup_script = "${file("minion-bootstrap.sh")}"

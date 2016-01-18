@@ -28,7 +28,7 @@ file_roots:
     - /srv/salt/states
 pillar_roots:
   base:
-    - /srv/salt/pillars
+    - /srv/salt/pillar
 
 # Configuration specifique au minion
 backup_mode: minion
@@ -36,6 +36,11 @@ retry_dns: 30
 acceptance_wait_time_max: 2
 log_level: info
 log_datefmt: '%H:%M:%S'
+mine_functions:
+  test.ping: []
+  network.ip_addrs:
+    interface: eth0
+    cidr: '10.0.0.0/8'
 EOF
 
 
