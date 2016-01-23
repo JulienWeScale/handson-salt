@@ -1,5 +1,3 @@
-info: salt managed cluster
-
 mine_functions:
   test.ping: []
   network.ip_addrs:

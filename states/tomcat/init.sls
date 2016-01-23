@@ -1,5 +1,8 @@
 {% from "tomcat/map.jinja" import tomcat_settings with context %}
 
+include:
+  - java8
+
 tomcat-user:
   user.present:
     - name: tomcat

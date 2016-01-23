@@ -1,7 +1,11 @@
+{%- set roles = grains['roles'] -%}
+
 base:
   '*':
-     - data
-     - haproxy
-  'minion-*':
-     - redis
-     - tomcat
+     - mine
+     - commons
+{%- for role in roles %}
+  'roles:{{ role }}':
+    - match: grain
+    - {{ role }}
+{%- endfor -%}
