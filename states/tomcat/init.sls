@@ -46,7 +46,7 @@ tomcat-root:
   file.absent:
     - name: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/webapps/ROOT
 
-/etc/init/tomcat.conf:
+/etc/systemd/system/tomcat.service:
   file.managed:
     - template: jinja
     - source: salt://tomcat/files/tomcat.conf
@@ -59,7 +59,7 @@ tomcat:
     - restart: True
     - watch:
       - file: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/conf/*
-      - file: /etc/init/tomcat.conf
+      - file: /etc/systemd/system/tomcat.service
       - file: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/webapps/*
 
 /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/conf/server.xml:
