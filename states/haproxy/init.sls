@@ -7,7 +7,6 @@ haproxy:
     - reload: True
     - watch:
       - pkg: haproxy
-      - file: /etc/haproxy/haproxy.cfg
 
 /etc/haproxy/haproxy.cfg:
   file.managed:
