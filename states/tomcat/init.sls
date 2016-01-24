@@ -49,7 +49,7 @@ tomcat-root:
 /etc/systemd/system/tomcat.service:
   file.managed:
     - template: jinja
-    - source: salt://tomcat/files/tomcat.conf
+    - source: salt://tomcat/files/tomcat.service
     - user: root
     - group: root
 

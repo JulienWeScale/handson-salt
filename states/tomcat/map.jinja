@@ -10,4 +10,4 @@
 
 
 {# Update settings defaults from pillar data #}
-{% set tomcat_settings = salt['pillar.get']('tomcat', default=default_settings.tomcat) %}
+{% set tomcat_settings = salt['pillar.get']('tomcat', default=default_settings.tomcat, merge=True) %}
