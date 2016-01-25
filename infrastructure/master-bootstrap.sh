@@ -114,3 +114,14 @@ cat << EOT > /etc/motd
 
  WeScale - Welcome to $HOSTNAME ($IP)
 EOT
+
+# Create user wescale with authorized_keys and sudo
+useradd --create-home wescale
+# wescale should be sudoer
+echo 'wescale ALL=NOPASSWD: ALL' >> /etc/sudoers
+mkdir -p /home/wescale/.ssh
+cat << EOP > /home/wescale/.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCSf88x3h5YTt4iyUdQZkfy6CTe0S04HYN1Y1IhJv34kjUki0Ch3XC9xpspu+CyxDun0WTZ2r1k/HUp0kJ3JnMAmRq/32M6x+S59cBy4zCuSyC56iEEEh02qVSWTach7sRbrz/6E8+KLcykdj5qMlNZFPeZY30532Lizz6Uz1TmQU5UVghaTHGlMAKu4DGg9XRXtVM2ef/AUi0jQKgykL7UE+46jVSxciTroZKqujV5LtxxP5kJZy98icNzGPFfBKSpN2YntYeCzQnw8N+Vsct+iZ+FJkTVNBU/+VzyOkwjyRGzlaDCFMQheHi31G89FhQtAFkX7TNi7+Y1Q/5OGmJ slemesle@MacBook-Pro-de-Seven.local
+EOP
+chmod 600 /home/wescale/.ssh/authorized_keys
+chown -R wescale:wescale /home/wescale/.ssh

@@ -10,3 +10,10 @@ variable "teams" {
     default = 1
 }
 
+variable "zone" {
+    default = "gcp-wescale-zone"
+}
+
+variable "domain" {
+    default = "gcp.wescale.fr."
+}

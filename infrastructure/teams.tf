@@ -37,6 +37,17 @@ EOG
     depends_on = ["google_compute_instance.root"]
 }
 
+resource "google_dns_record_set" "team-master" {
+    count = "${var.teams}"
+    managed_zone = "${var.zone}"
+    name = "team${count.index +1}-master.${var.domain}"
+    type = "A"
+    ttl = 300
+    rrdatas = ["${element(google_compute_instance.team-master.*.network_interface.0.access_config.0.nat_ip, count.index)}"]
+    depends_on = ["google_compute_instance.team-master"]
+}
+
+
 # HAProxy of the team
 resource "google_compute_instance" "team-haproxy" {
     count = "${var.teams}"

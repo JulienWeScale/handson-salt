@@ -87,6 +87,16 @@ EOG
 }
 
 
+resource "google_dns_record_set" "central-master" {
+    managed_zone = "${var.zone}"
+    name = "central-master.${var.domain}"
+    type = "A"
+    ttl = 300
+    rrdatas = ["${google_compute_instance.root.network_interface.0.access_config.0.nat_ip}"]
+    depends_on = ["google_compute_instance.root"]
+}
+
+
 resource "google_compute_route" "nat" {
     name = "nat-gateway"
     dest_range = "0.0.0.0/0"
@@ -97,3 +107,5 @@ resource "google_compute_route" "nat" {
     tags = ["nat"]
     depends_on = ["google_compute_instance.root"]
 }
+
+
