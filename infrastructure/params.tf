@@ -7,7 +7,7 @@ variable "image" {
 
 variable "teams" {
     # Custom centos7 with updates
-    default = 20
+    default = 1
 }
 
 variable "zone" {
