@@ -1,0 +1,14 @@
+{% set default_settings = {
+    'clickcount': {
+        'redis_host': 'redis',
+        'redis_port': 6379,
+        'war_url': 'https://github.com/mparisot-wescale/click-count/releases/download/v1.1/clickCount.war',
+        'war_hash': 'md5=8d65508f2974751a7c221106a110e45d',
+    }
+}%}
+
+
+{# Update settings defaults from pillar data #}
+{% set clickcount_settings = salt['pillar.get']('clickcount', default=default_settings.clickcount) %}
+
+
