@@ -8,43 +8,43 @@ tomcat-user:
     - name: tomcat
     - fullname: Apache Tomcat
     - shell: /usr/sbin/nologin
-    - home: /home/tomcat
+    - home: {{ tomcat_settings.home }}
     
 tomcat-server:
   archive.extracted:
-    - name: /home/tomcat
+    - name: {{ tomcat_settings.home }}
     - source: http://archive.apache.org/dist/tomcat/tomcat-8/v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz
     - source_hash: http://archive.apache.org/dist/tomcat/tomcat-8//v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz.md5
     - archive_format: tar
     - archive_user: tomcat
-    - if_missing: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}
+    - if_missing: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}
   file.directory:
-    - name: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}
-    - user: tomcat
-    - group: tomcat
-    - recurse: 
+    - name: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}
+    - user: {{tomcat_settings.user}}
+    - group: {{tomcat_settings.group}}
+    - recurse:
       - user
       - group
 
 tomcat-exemples:
   file.absent:
-    - name: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/webapps/examples
+    - name: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/webapps/examples
 
 tomcat-docs:
   file.absent:
-    - name: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/webapps/docs
+    - name: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/webapps/docs
 
 tomcat-host-manager:
   file.absent:
-    - name: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/webapps/host-manager
+    - name: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/webapps/host-manager
 
 tomcat-manager:
   file.absent:
-    - name: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/webapps/manager
+    - name: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/webapps/manager
 
 tomcat-root:
   file.absent:
-    - name: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/webapps/ROOT
+    - name: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/webapps/ROOT
 
 /etc/systemd/system/tomcat.service:
   file.managed:
@@ -58,11 +58,11 @@ tomcat:
     - enable: True
     - restart: True
     - watch:
-      - file: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/conf/*
+      - file: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/conf/*
       - file: /etc/systemd/system/tomcat.service
-      - file: /home/tomcat/apache-tomcat-{{tomcat_settings.version}}/webapps/*
+      - file: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/webapps/*
 
-/home/tomcat/apache-tomcat-{{tomcat_settings.version}}/conf/server.xml:
+{{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/conf/server.xml:
   file.managed:
   - template: jinja
   - source: salt://tomcat/files/server.xml
