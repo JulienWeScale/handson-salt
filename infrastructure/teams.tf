@@ -24,6 +24,7 @@ resource "google_compute_instance" "team-master" {
         grains = <<EOG
 roles:
   - master
+team: team${count.index + 1}
 EOG
         master = "central-master"
     }
@@ -71,6 +72,7 @@ resource "google_compute_instance" "team-haproxy" {
         grains = <<EOG
 roles:
   - haproxy
+team: team${count.index + 1}
 EOG
         master = "team${count.index + 1}-master"
     }
@@ -107,6 +109,7 @@ resource "google_compute_instance" "team-tomcat" {
         grains = <<EOG
 roles:
   - tomcat
+team: team${((count.index + 1) % var.teams) + 1}
 EOG
         master = "team${((count.index + 1) % var.teams) + 1}-master"
     }
@@ -143,6 +146,7 @@ resource "google_compute_instance" "team-redis" {
         grains = <<EOG
 roles:
   - redis
+team: team${count.index + 1}
 EOG
         master = "team${count.index + 1}-master"
     }

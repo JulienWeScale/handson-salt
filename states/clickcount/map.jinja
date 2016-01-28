@@ -1,14 +1,15 @@
+{% set redis_port = pillar.get('redis:port', '6397') %}
+
 {% set default_settings = {
     'clickcount': {
-        'redis_host': 'redis',
-        'redis_port': 6379,
+        'redis_host': 'localhost',
+        'redis_port': redis_port,
         'war_url': 'https://github.com/mparisot-wescale/click-count/releases/download/v1.1/clickCount.war',
-        'war_hash': 'md5=8d65508f2974751a7c221106a110e45d',
+        'war_hash': 'md5=8d65508f2974751a7c221106a110e45d'
     }
 }%}
 
-
 {# Update settings defaults from pillar data #}
-{% set clickcount_settings = salt['pillar.get']('clickcount', default=default_settings.clickcount) %}
+{% set clickcount_settings = salt['pillar.get']('clickcount', default=default_settings.clickcount, merge=True) %}
 
 
