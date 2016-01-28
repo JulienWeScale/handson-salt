@@ -108,7 +108,7 @@ resource "google_compute_instance" "team-tomcat" {
     metadata {
         grains = <<EOG
 roles:
-  - tomcat
+  - clickcount
 team: team${((count.index + 1) % var.teams) + 1}
 EOG
         master = "team${((count.index + 1) % var.teams) + 1}-master"
