@@ -15,4 +15,5 @@ redis-server:
 {#
         - enable: True
         - restart: True
+        - watch ???
 #}
