@@ -16,7 +16,7 @@ create-tomcat-setenv.sh:
 
 install_webapp:
   file.managed:
-    - name: {{ tomcat_settings.home }}/apache-tomcat-{{tomcat_settings.version}}/webapps/ROOT.war
+    - name: {{ tomcat_root }}/webapps/ROOT.war
     - source: {{ clickcount_settings.war_url }}
     - source_hash: {{ clickcount_settings.war_hash }}
     - watch_in:
