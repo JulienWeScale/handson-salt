@@ -1,7 +1,9 @@
 redis-server:
-  pkg.installed: []
+  pkg.installed:
+    - name: redis
   file.managed:
     - name: /etc/redis/redis.conf
+    - makedirs: true
     - template: jinja
     - source: salt://redis/files/redis.conf
     - user: root
@@ -10,6 +12,7 @@ redis-server:
     - require:
         - pkg: redis-server
   service.running:
+    - name: redis
     - enable: True
     - restart: True
     - watch:
