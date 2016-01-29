@@ -3,21 +3,22 @@
 
 {%  set tomcat_root = tomcat_settings.home ~ '/apache-tomcat-' ~ tomcat_settings.version %}
 
-include:
-  - tomcat
+{#
+    include tomcat state to be sure to have tomcat installed here
+    see https://docs.saltstack.com/en/latest/ref/states/include.html
+ #}
 
 create-tomcat-setenv.sh:
   file.managed:
     - name: {{ tomcat_root }}/bin/setenv.sh
-    - source: salt://clickcount/files/setenv.sh
-    - template: jinja
-    - watch_in:
-        - service: tomcat
+{#
+    declare source template in jinja and ensure tomcat will restart with watch_in on service: tomcat
+#}
 
 install_webapp:
   file.managed:
     - name: {{ tomcat_root }}/webapps/ROOT.war
-    - source: {{ clickcount_settings.war_url }}
+{# declare source with settings war_url #}
     - source_hash: {{ clickcount_settings.war_hash }}
     - watch_in:
         - service: tomcat

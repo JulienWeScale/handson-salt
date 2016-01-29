@@ -1,40 +1,46 @@
-{% from "tomcat/map.jinja" import tomcat_settings with context %}
+{#
+    Import tomcat_settings from map.jinja see redis.conf for correct syntax
+    from ... import ... with context
+#}
 
 {%  set tomcat_root = tomcat_settings.home ~ '/apache-tomcat-' ~ tomcat_settings.version %}
 
+{#
+Include java8 state here before trying tomcat installation
 include:
   - java8
+#}
 
 tomcat-user:
-  user.present:
-    - name: tomcat
-    - fullname: Apache Tomcat
-    - shell: /usr/sbin/nologin
-    - home: {{ tomcat_settings.home }}
+{#
+    Create the tomcat user with shell as /usr/sbin/nologin and home as defined in tomcat_settings.home
+    see https://docs.saltstack.com/en/latest/ref/states/all/salt.states.user.html
+#}
+
     
 tomcat-server:
   archive.extracted:
     - name: {{ tomcat_settings.home }}
     - source: http://archive.apache.org/dist/tomcat/tomcat-8/v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz
-    - source_hash: http://archive.apache.org/dist/tomcat/tomcat-8//v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz.md5
+    - source_hash: http://archive.apache.org/dist/tomcat/tomcat-8/v{{tomcat_settings.version}}/bin/apache-tomcat-{{tomcat_settings.version}}.tar.gz.md5
     - archive_format: tar
     - archive_user: tomcat
     - if_missing: {{ tomcat_root }}
   file.directory:
     - name: {{ tomcat_root }}
-    - user: {{tomcat_settings.user}}
-    - group: {{tomcat_settings.group}}
-    - recurse:
-      - user
-      - group
+{#
+    Fix owner and group for all files and dirs under tomcat_root
+    see recurse in https://docs.saltstack.com/en/latest/ref/states/all/salt.states.file.html#salt.states.file.directory
+#}
 
 tomcat-exemples:
   file.absent:
     - name: {{ tomcat_root }}/webapps/examples
 
 tomcat-docs:
-  file.absent:
-    - name: {{ tomcat_root }}/webapps/docs
+{#
+    remove docs webapps in tomcat_root/webapps/docs
+#}
 
 tomcat-host-manager:
   file.absent:
@@ -49,11 +55,9 @@ tomcat-root:
     - name: {{ tomcat_root }}/webapps/ROOT
 
 /etc/systemd/system/tomcat.service:
-  file.managed:
-    - template: jinja
-    - source: salt://tomcat/files/tomcat.service
-    - user: root
-    - group: root
+{#
+    Use file.managed to generate tomcat.service file and install it as root:root
+#}
 
 tomcat:
   service.running:
@@ -61,8 +65,9 @@ tomcat:
     - restart: True
     - watch:
         - file: {{ tomcat_root }}/conf/*
-        - file: /etc/systemd/system/tomcat.service
-        - file: {{ tomcat_root }}/webapps/*
+{#
+    watch changes in service unit file and webapps to restart tomcat when needed
+#}
 
 {{ tomcat_root }}/conf/server.xml:
   file.managed:

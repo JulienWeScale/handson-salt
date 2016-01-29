@@ -1,4 +1,9 @@
-{% set redis_port = pillar.get('redis:port', '6397') %}
+
+{#
+    Use pillar.get to retrieve redis:port with default value to '6397'
+    see https://docs.saltstack.com/en/latest/ref/modules/all/salt.modules.pillar.html#salt.modules.pillar.get
+ #}
+{% set redis_port = XXXX %}
 
 {% set default_settings = {
     'clickcount': {
