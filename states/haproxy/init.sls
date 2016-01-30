@@ -5,6 +5,7 @@ haproxy:
   service.running:
     - enable: True
     - reload: True
+    - restart: True
     - watch:
       - pkg: haproxy
 
