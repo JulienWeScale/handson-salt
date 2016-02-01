@@ -7,10 +7,10 @@ reactor:                            # Master config section "reactor"
     - salt://reactor/register_minion.sls        # Things to do when a minion starts
 #}
 
-{% if '-tomcat' in data['id'] and 'clickcount' in data['grains']['roles'] %}
+{% if '-tomcat' in data['id'] and 'clickcount' in data['data']['grains']['roles'] %}
 tomcat_highstate_run:
   local.state.highstate:
-    - tgt: data[id]
+    - tgt: {{ data['id'] }}
 
 haproxy_highstate:
   local.state.highstate:
