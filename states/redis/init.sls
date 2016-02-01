@@ -1,7 +1,7 @@
 redis:
     pkg.installed: []
     file.managed:
-        - name: /etc/redis/redis.conf
+        - name: /etc/redis.conf
         - makedirs: true
         - template: jinja
 {#
@@ -12,6 +12,9 @@ redis:
         - require:
             - pkg: redis
 #}
+    selinux.mode:
+        - name: permissive
+
     service.running:
 {#
         - enable: True
