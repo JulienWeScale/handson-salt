@@ -123,6 +123,48 @@ EOG
     depends_on = ["google_compute_instance.root"]
 }
 
+
+# Tomcat to add after reactor :)
+
+/*
+# Tomcats of the team
+resource "google_compute_instance" "team-tomcat-new" {
+    count = "${var.teams }"
+    name = "team${count.index + 1}-tomcat-new"
+    machine_type = "g1-small"
+    zone = "europe-west1-b"
+    tags = ["team${count.index + 1}", "tomcat", "salt", "nat"]
+
+    disk {
+        image = "${var.image}"
+    }
+
+    network_interface {
+        network = "salt"
+    }
+
+    metadata {
+        grains = <<EOG
+roles:
+  - clickcount
+team: team${count.index + 1}
+EOG
+        master = "team${count.index + 1}-master"
+    }
+
+    metadata_startup_script = "${file("minion-bootstrap.sh")}"
+
+    service_account {
+        scopes = ["compute-ro", "storage-ro"]
+    }
+
+    depends_on = ["google_compute_instance.root"]
+}
+
+*/
+
+
+
 # Redis of the team
 resource "google_compute_instance" "team-redis" {
     count = "${var.teams}"

@@ -142,3 +142,5 @@ EOC
 chmod 600 /home/wescale/.ssh/authorized_keys
 chmod 600 /home/wescale/.ssh/config
 chown -R wescale:wescale /home/wescale/.ssh
+
+salt-call event.send 'minion/bootstrap/done' data="{\"id\": \"${HOSTNAME}\"}" with_grains="roles"
