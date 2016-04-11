@@ -22,5 +22,5 @@ redis-server:
     - restart: True
     - watch:
         - pkg: redis-server
-        - file: /etc/redis/redis.conf
+        - file: /etc/redis.conf
         - selinux: redis-server
