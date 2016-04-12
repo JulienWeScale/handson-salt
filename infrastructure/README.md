@@ -3,15 +3,15 @@
 ## Prérequis
 
 L'infrastructure se crée dans un projet google cloud. Elle repose sur une image
-paramètrable dont l'os de base est Centos 7.1. Pour la partie DNS il faut avoir crée
+paramétrable dont l'os de base est Centos 7.1. Pour la partie DNS il faut avoir créé
 une zone pour le sous-domaine gcp.wescale.fr. Pour que la délégation fonctionne, il faudra
-s'assurer que les DNS google sont bien enregistré en NS dans le fichier de zone principal.
+s'assurer que les DNS google sont bien enregistré en NS dans le fichier de zone principale.
 
 
 
 ## Compte de service
 
-le compte de service du projet est fournie sous forme chiffrée dans `gcloud.json.gpg`
+le compte de service du projet est fourni sous forme chiffrée dans `gcloud.json.gpg`
 pour la déchiffrer lancez :
 
 ```shell
@@ -33,12 +33,12 @@ Cette infrastructure est créée via terraform. Les fichiers descriptifs sont :
 * common.tf - Déclaration du provider google compute engine et des ressources de base de l'infrastructure
               (réseau, firewall, master central)
 * teams.tf - Déclaration des machines par équipe
-* params.tf - Déclaration des paramétres (nom d'image, nombre d'équipes, dns, ...)
+* params.tf - Déclaration des paramètres (nom d'image, nombre d'équipes, dns, ...)
 
 ## Infrastructure
 
 L'infrastructure du handson crée un réseau et des règles de firewall valables autorisant
-l'accés ssh et web depuis l'extérieure et autorisant tout trafique réseau en interne.
+l'accès ssh et web depuis l'extérieur et autorisant tout trafic réseau en interne.
 Les machines :
 * central-master (serveur master salt pour tte l'infrastructure)
 * teamX-master (serveur master salt pour l'infrastructure de l'équipe X)
@@ -68,7 +68,7 @@ $ terraform destroy
 
 ## Accès aux instances
 
-Pour se connecter aux instances il faut utiliser un client ssh avec la clef privé fournie
+Pour se connecter aux instances il faut utiliser un client ssh avec la clef privée fournie
 dans ce répertoire.
 Pour déchiffrer la clef lancez:
 
@@ -76,7 +76,7 @@ Pour déchiffrer la clef lancez:
 $ gpg -d salt-handson.gpg
 ```
 
-Seul les machines master ont une ip publique et sont donc accessible par internet.
+Seules les machines master ont une ip publique et sont donc accessibles par internet.
 
 Pour le teamX-master lancez:
 
