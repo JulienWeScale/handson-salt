@@ -2,7 +2,7 @@
 # handson-salt
 SaltStack Hands On
 
-2 branche de ce repo : 
+2 branches de ce repo : 
 * States contient les sls
 * Pillar contient la configuration
 
@@ -12,7 +12,7 @@ Tout d'abord il faut se connecter à votre saltmaster sur google cloud.
 
 Configurer le mode open dans le fichier /etc/salt/master.
 
-Verifier la connexion a votre minion :
+Verifier la connexion à votre minion :
 
 salt * test.ping 
 
